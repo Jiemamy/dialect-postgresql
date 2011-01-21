@@ -98,6 +98,13 @@
       <artifactId>jiemamy-sql</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.jiemamy</groupId>
+      <artifactId>jiemamy-core</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <repositories>
     <repository>

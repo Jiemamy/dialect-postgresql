@@ -18,17 +18,13 @@
  */
 package org.jiemamy.dialect.postgresql;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-
 import javax.sql.DataSource;
 import javax.sql.XADataSource;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import org.jiemamy.JiemamyContext;
+import org.jiemamy.dialect.AbstractDialectTest;
 import org.jiemamy.dialect.Dialect;
 
 /**
@@ -36,7 +32,7 @@ import org.jiemamy.dialect.Dialect;
  * 
  * @author daisuke
  */
-public class PostgresqlDialectTest {
+public class PostgresqlDialectTest extends AbstractDialectTest {
 	
 	/** {@link XADataSource} */
 	public XADataSource xaDataSource;
@@ -61,13 +57,8 @@ public class PostgresqlDialectTest {
 		dialect = context.findDialect();
 	}
 	
-	/**
-	 * {@code null}を返してはいけないメソッドは{@code null}を返さない。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void test02_nullを返してはいけないメソッドはnullを返さない() throws Exception {
-		assertThat(dialect.getValidator(), is(notNullValue()));
+	@Override
+	protected Dialect getInstance() {
+		return dialect;
 	}
 }
