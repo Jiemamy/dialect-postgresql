@@ -40,6 +40,7 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import org.jiemamy.dialect.AbstractDialect;
+import org.jiemamy.dialect.SqlEmitter;
 import org.jiemamy.dialect.TypeParameterSpec;
 import org.jiemamy.dialect.TypeParameterSpec.Necessity;
 import org.jiemamy.model.datatype.DefaultTypeReference;
@@ -125,6 +126,10 @@ public class PostgresqlDialect extends AbstractDialect {
 	
 	public String getName() {
 		return "PostgreSQL 8.1";
+	}
+	
+	public SqlEmitter getSqlEmitter() {
+		return new PostgreSqlEmitter();
 	}
 	
 	@Override
