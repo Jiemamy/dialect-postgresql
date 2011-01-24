@@ -24,7 +24,6 @@ import static org.junit.Assert.assertThat;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +49,8 @@ import org.jiemamy.model.table.Table;
  */
 public class PostgreSqlEmitterTest {
 	
+	private static Logger logger = LoggerFactory.getLogger(PostgreSqlEmitterTest.class);
+	
 	private static final TypeReference INTEGER = new DefaultTypeReference(DataTypeCategory.INTEGER, "INTEGER", "int4");
 	
 	private static final TypeReference VARCHAR = new DefaultTypeReference(DataTypeCategory.VARCHAR);
@@ -59,8 +60,6 @@ public class PostgreSqlEmitterTest {
 	private DefaultSqlExportConfig config;
 	
 	private JiemamyContext context;
-	
-	private static Logger logger = LoggerFactory.getLogger(PostgreSqlEmitterTest.class);
 	
 
 	/**
@@ -97,7 +96,6 @@ public class PostgreSqlEmitterTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	@Ignore("まだちょっと実装が変っぽい")
 	public void test02_単純なテーブルを1つemitして確認() throws Exception {
 		DefaultTypeVariant varchar32 = new DefaultTypeVariant(VARCHAR);
 		varchar32.putParam(TypeParameterKey.SIZE, 32);
