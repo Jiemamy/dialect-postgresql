@@ -33,6 +33,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.jiemamy.DefaultContextMetadata;
 import org.jiemamy.JiemamyContext;
 import org.jiemamy.JiemamyContextTest;
 import org.jiemamy.SqlFacet;
@@ -88,7 +89,9 @@ public class SqlExporterPostgresqlTest {
 		deleteFile(OUTPUT_FILE);
 		assertThat(OUTPUT_FILE.exists(), is(false));
 		
-		context.setDialectClassName(PostgresqlDialect.class.getName());
+		DefaultContextMetadata meta = new DefaultContextMetadata();
+		meta.setDialectClassName(PostgresqlDialect.class.getName());
+		context.setMetadata(meta);
 		
 		BufferedReader reader = null;
 		try {
@@ -124,7 +127,9 @@ public class SqlExporterPostgresqlTest {
 		FileUtils.deleteDirectory(NOT_EXISTS_DIR);
 		assertThat(NOT_EXISTS_DIR.exists(), is(false));
 		
-		context.setDialectClassName(PostgresqlDialect.class.getName());
+		DefaultContextMetadata meta = new DefaultContextMetadata();
+		meta.setDialectClassName(PostgresqlDialect.class.getName());
+		context.setMetadata(meta);
 		
 		BufferedReader reader = null;
 		try {

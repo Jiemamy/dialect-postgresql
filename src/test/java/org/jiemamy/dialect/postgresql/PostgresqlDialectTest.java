@@ -23,6 +23,7 @@ import javax.sql.XADataSource;
 
 import org.junit.Before;
 
+import org.jiemamy.DefaultContextMetadata;
 import org.jiemamy.JiemamyContext;
 import org.jiemamy.dialect.AbstractDialectTest;
 import org.jiemamy.dialect.Dialect;
@@ -53,7 +54,9 @@ public class PostgresqlDialectTest extends AbstractDialectTest {
 	@Before
 	public void setUp() throws Exception {
 		context = new JiemamyContext();
-		context.setDialectClassName(PostgresqlDialect.class.getName());
+		DefaultContextMetadata meta = new DefaultContextMetadata();
+		meta.setDialectClassName(PostgresqlDialect.class.getName());
+		context.setMetadata(meta);
 		dialect = context.findDialect();
 	}
 	
