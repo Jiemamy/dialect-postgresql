@@ -18,7 +18,6 @@
  */
 package org.jiemamy.dialect.postgresql;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -110,22 +109,19 @@ public class PostgreSqlEmitter extends DefaultSqlEmitter {
 //	@Override
 //	protected SqlStatement emitDropEntityStatement(EntityModel entityModel) {
 //		SqlStatement stmt = super.emitDropEntityStatement(entityModel);
-//		insertIfExists(stmt);
-//		return stmt;
+//		return insertIfExists(stmt);
 //	}
 //	
 //	@Override
 //	protected SqlStatement emitDropIndexStatement(IndexModel indexModel) {
 //		SqlStatement stmt = super.emitDropIndexStatement(indexModel);
-//		insertIfExists(stmt);
-//		return stmt;
+//		return insertIfExists(stmt);
 //	}
 //	
 //	@Override
 //	protected SqlStatement emitDropSchemaStatement(String schemaName) {
 //		SqlStatement stmt = super.emitDropSchemaStatement(schemaName);
-//		insertIfExists(stmt);
-//		return stmt;
+//		return insertIfExists(stmt);
 //	}
 	
 //	@Override
@@ -161,11 +157,10 @@ public class PostgreSqlEmitter extends DefaultSqlEmitter {
 //	}
 	
 	@SuppressWarnings("unused")
-	private void insertIfExists(SqlStatement stmt) {
-		DefaultSqlStatement stmt2 = (DefaultSqlStatement) stmt;
-		ArrayList<Token> tokens = Lists.newArrayList();
-		tokens.add(Keyword.of("IF"));
-		tokens.add(Keyword.of("EXISTS"));
-		stmt2.insert(2, tokens);
+	private SqlStatement insertIfExists(SqlStatement stmt) {
+		List<Token> tokens = stmt.toTokens();
+		tokens.add(2, Keyword.of("IF"));
+		tokens.add(3, Keyword.of("EXISTS"));
+		return new DefaultSqlStatement(tokens);
 	}
 }
