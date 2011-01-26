@@ -42,7 +42,7 @@ import org.jiemamy.model.table.DefaultTableModel;
 import org.jiemamy.model.table.Table;
 
 /**
- * TODO for daisuke
+ * {@link PostgreSqlEmitter}のテストクラス。
  * 
  * @version $Id$
  * @author daisuke
