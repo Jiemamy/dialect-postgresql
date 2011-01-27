@@ -49,6 +49,7 @@ import org.jiemamy.model.table.Table;
  */
 public class PostgreSqlEmitterTest {
 	
+	@SuppressWarnings("unused")
 	private static Logger logger = LoggerFactory.getLogger(PostgreSqlEmitterTest.class);
 	
 	private static final TypeReference INTEGER = new DefaultTypeReference(DataTypeCategory.INTEGER, "INTEGER", "int4");
