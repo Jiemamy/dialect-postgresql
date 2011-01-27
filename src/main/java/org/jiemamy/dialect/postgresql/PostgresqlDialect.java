@@ -132,7 +132,7 @@ public class PostgresqlDialect extends AbstractDialect {
 	
 	public DatabaseMetadataParser getDatabaseMetadataParser() {
 		// TODO カスタマイズ
-		return new DefaultDatabaseMetadataParser();
+		return new DefaultDatabaseMetadataParser(this);
 	}
 	
 	public String getName() {
@@ -140,7 +140,7 @@ public class PostgresqlDialect extends AbstractDialect {
 	}
 	
 	public SqlEmitter getSqlEmitter() {
-		return new PostgreSqlEmitter();
+		return new PostgreSqlEmitter(this);
 	}
 	
 	@Override

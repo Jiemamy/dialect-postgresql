@@ -24,7 +24,9 @@ import com.google.common.collect.Lists;
 
 import org.jiemamy.JiemamyContext;
 import org.jiemamy.dialect.DefaultSqlEmitter;
+import org.jiemamy.dialect.Dialect;
 import org.jiemamy.dialect.SqlEmitter;
+import org.jiemamy.dialect.TokenResolver;
 import org.jiemamy.dialect.postgresql.experimental.parameter.DefaultIndexOption;
 import org.jiemamy.dialect.postgresql.experimental.parameter.IndexMethodType;
 import org.jiemamy.dialect.postgresql.experimental.parameter.IndexOption;
@@ -45,6 +47,27 @@ import org.jiemamy.model.table.TableModel;
  * @author daisuke
  */
 public class PostgreSqlEmitter extends DefaultSqlEmitter {
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param dialect {@link Dialect}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public PostgreSqlEmitter(Dialect dialect) {
+		super(dialect);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param dialect {@link Dialect}
+	 * @param tokenResolver {@link TokenResolver}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public PostgreSqlEmitter(Dialect dialect, TokenResolver tokenResolver) {
+		super(dialect, tokenResolver);
+	}
 	
 	@Override
 	protected SqlStatement emitCreateIndexStatement(JiemamyContext context, TableModel tableModel, IndexModel indexModel) {
