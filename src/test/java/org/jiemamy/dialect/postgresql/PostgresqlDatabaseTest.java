@@ -24,6 +24,8 @@ import static org.junit.Assert.assertThat;
 import java.net.InetAddress;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.jiemamy.test.AbstractDatabaseTest;
 
@@ -35,6 +37,9 @@ import org.jiemamy.test.AbstractDatabaseTest;
  */
 public class PostgresqlDatabaseTest extends AbstractDatabaseTest {
 	
+	private static Logger logger = LoggerFactory.getLogger(PostgresqlDatabaseTest.class);
+	
+
 	/**
 	 * TODO for daisuke
 	 * 
@@ -43,7 +48,8 @@ public class PostgresqlDatabaseTest extends AbstractDatabaseTest {
 	@Test
 	public void testname() throws Exception {
 		assertThat(InetAddress.getLocalHost().getHostName(), is("griffon.jiemamy.org"));
-		assertThat(getPassword(), is("****"));
+		assertThat(getPassword(), is("dummy"));
+		logger.info("OK");
 	}
 	
 }
