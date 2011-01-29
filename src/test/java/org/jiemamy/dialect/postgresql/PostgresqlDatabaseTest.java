@@ -19,15 +19,32 @@
 package org.jiemamy.dialect.postgresql;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
-import java.net.InetAddress;
+import java.io.File;
+import java.io.FileReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.sql.Connection;
+import java.util.Set;
 
+import org.apache.commons.dbutils.DbUtils;
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.jiemamy.DatabaseCleaner;
+import org.jiemamy.JiemamyContext;
+import org.jiemamy.composer.exporter.DefaultSqlExportConfig;
+import org.jiemamy.composer.exporter.SqlExporter;
+import org.jiemamy.composer.importer.DatabaseImporter;
+import org.jiemamy.composer.importer.DefaultDatabaseImportConfig;
+import org.jiemamy.model.DatabaseObjectModel;
 import org.jiemamy.test.AbstractDatabaseTest;
+import org.jiemamy.test.TestModelBuilders;
+import org.jiemamy.utils.sql.SqlExecutor;
 
 /**
  * TODO for daisuke
@@ -46,10 +63,78 @@ public class PostgresqlDatabaseTest extends AbstractDatabaseTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void testname() throws Exception {
-		assertThat(InetAddress.getLocalHost().getHostName(), is("griffon.jiemamy.org"));
-		assertThat(getPassword(), is("dummy"));
-		logger.info("OK");
+	public void test01_import() throws Exception {
+		DatabaseImporter importer = new DatabaseImporter();
+		JiemamyContext context = new JiemamyContext();
+		boolean importModel = importer.importModel(context, newImportConfig());
+		assertThat(importModel, is(true));
+		
+		Set<DatabaseObjectModel> databaseObjects = context.getDatabaseObjects();
+		for (DatabaseObjectModel databaseObjectModel : databaseObjects) {
+			logger.info(databaseObjectModel.toString());
+		}
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_clean() throws Exception {
+		// まず clean
+		new DatabaseCleaner().clean(newImportConfig());
+		
+		// export
+		File outFile = new File("target/testresult/PostgresqlDatabaseTest_test02.sql");
+		
+		DefaultSqlExportConfig config = new DefaultSqlExportConfig();
+		config.setDataSetIndex(0);
+		config.setEmitDropStatements(false);
+		config.setOutputFile(outFile);
+		config.setOverwrite(true);
+		
+		new SqlExporter().exportModel(TestModelBuilders.EMP_DEPT.getBuiltModel(PostgresqlDialect.class.getName()),
+				config);
+		
+		// execute
+		Connection connection = null;
+		FileReader fileReader = null;
+		try {
+			connection = getConnection();
+			SqlExecutor sqlExecutor = new SqlExecutor(connection);
+			fileReader = new FileReader(outFile);
+			sqlExecutor.execute(fileReader);
+		} finally {
+			IOUtils.closeQuietly(fileReader);
+			DbUtils.closeQuietly(connection);
+		}
+		
+		// assert not zero
+		JiemamyContext context = new JiemamyContext();
+		assertThat(new DatabaseImporter().importModel(context, newImportConfig()), is(true));
+		assertThat(context.getDatabaseObjects().size(), is(not(0)));
+		
+		// clean
+		new DatabaseCleaner().clean(newImportConfig());
+		
+		// assert zero
+		JiemamyContext context2 = new JiemamyContext();
+		assertThat(new DatabaseImporter().importModel(context2, newImportConfig()), is(true));
+		assertThat(context2.getDatabaseObjects().size(), is(0));
+	}
+	
+	private DefaultDatabaseImportConfig newImportConfig() throws MalformedURLException {
+		DefaultDatabaseImportConfig config = new DefaultDatabaseImportConfig();
+		config.setDialect(new PostgresqlDialect());
+		config.setDriverClassName(getDriverClassName());
+		config.setDriverJarPaths(new URL[] {
+			new File(getJarPath()).toURL()
+		});
+		config.setPassword(getPassword());
+		config.setSchema("public");
+		config.setUri(getConnectionUri());
+		config.setUsername(getUsername());
+		return config;
+	}
 }
