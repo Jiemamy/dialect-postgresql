@@ -42,7 +42,7 @@ public class PostgresqlDatabaseTest extends AbstractDatabaseTest {
 	 */
 	@Test
 	public void testname() throws Exception {
-		System.out.print(InetAddress.getLocalHost().getHostName());
+		assertThat(InetAddress.getLocalHost().getHostName(), is("griffon.jiemamy.org"));
 		assertThat(getPassword(), is("****"));
 	}
 	
