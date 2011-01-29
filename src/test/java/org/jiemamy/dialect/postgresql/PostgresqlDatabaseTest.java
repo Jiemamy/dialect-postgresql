@@ -18,7 +18,10 @@
  */
 package org.jiemamy.dialect.postgresql;
 
-import java.util.Properties;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
+import java.net.InetAddress;
 
 import org.junit.Test;
 
@@ -39,8 +42,8 @@ public class PostgresqlDatabaseTest extends AbstractDatabaseTest {
 	 */
 	@Test
 	public void testname() throws Exception {
-		Properties properties = System.getProperties();
-		properties.list(System.out);
+		System.out.print(InetAddress.getLocalHost().getHostName());
+		assertThat(getPassword(), is("****"));
 	}
 	
 }
