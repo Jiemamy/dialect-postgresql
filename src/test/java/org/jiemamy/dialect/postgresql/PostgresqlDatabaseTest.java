@@ -125,13 +125,11 @@ public class PostgresqlDatabaseTest extends AbstractDatabaseTest {
 	}
 	
 	@Override
-	protected String getPropertiesFilePath() {
-		return "postgresql_local.properties";
-	}
-	
-	@Override
-	protected String getPropertiesFilePathForCI() {
-		return "postgresql_griffon.properties";
+	protected String getPropertiesFilePath(String hostName) {
+		if (hostName.equals("griffon.jiemamy.org")) {
+			return "/postgresql_griffon.properties";
+		}
+		return "/postgresql_local.properties";
 	}
 	
 	private DefaultDatabaseImportConfig newImportConfig() throws MalformedURLException {
