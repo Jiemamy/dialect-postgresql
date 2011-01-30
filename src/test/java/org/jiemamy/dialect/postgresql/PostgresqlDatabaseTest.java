@@ -124,17 +124,27 @@ public class PostgresqlDatabaseTest extends AbstractDatabaseTest {
 		assertThat(context2.getDatabaseObjects().size(), is(0));
 	}
 	
+	@Override
+	protected String getPropertiesFilePath() {
+		return "postgresql_local.properties";
+	}
+	
+	@Override
+	protected String getPropertiesFilePathForCI() {
+		return "postgresql_griffon.properties";
+	}
+	
 	private DefaultDatabaseImportConfig newImportConfig() throws MalformedURLException {
 		DefaultDatabaseImportConfig config = new DefaultDatabaseImportConfig();
 		config.setDialect(new PostgresqlDialect());
-		config.setDriverClassName(getDriverClassName());
 		config.setDriverJarPaths(new URL[] {
 			new File(getJarPath()).toURL()
 		});
-		config.setPassword(getPassword());
-		config.setSchema("public");
+		config.setDriverClassName(getDriverClassName());
 		config.setUri(getConnectionUri());
+		config.setSchema("public");
 		config.setUsername(getUsername());
+		config.setPassword(getPassword());
 		return config;
 	}
 }
