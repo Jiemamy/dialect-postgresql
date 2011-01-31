@@ -42,7 +42,7 @@ import org.jiemamy.composer.exporter.SqlExporter;
 import org.jiemamy.composer.importer.DatabaseImporter;
 import org.jiemamy.composer.importer.DefaultDatabaseImportConfig;
 import org.jiemamy.model.DatabaseObjectModel;
-import org.jiemamy.test.AbstractDatabaseTest;
+import org.jiemamy.test.PostgresqlDatabaseTest;
 import org.jiemamy.test.TestModelBuilders;
 import org.jiemamy.utils.sql.SqlExecutor;
 
@@ -52,9 +52,9 @@ import org.jiemamy.utils.sql.SqlExecutor;
  * @version $Id$
  * @author daisuke
  */
-public class PostgresqlDatabaseTest extends AbstractDatabaseTest {
+public class PostgresqlDatabaseIntegrationTest extends PostgresqlDatabaseTest {
 	
-	private static Logger logger = LoggerFactory.getLogger(PostgresqlDatabaseTest.class);
+	private static Logger logger = LoggerFactory.getLogger(PostgresqlDatabaseIntegrationTest.class);
 	
 
 	/**
@@ -122,27 +122,5 @@ public class PostgresqlDatabaseTest extends AbstractDatabaseTest {
 		JiemamyContext context2 = new JiemamyContext();
 		assertThat(new DatabaseImporter().importModel(context2, newImportConfig()), is(true));
 		assertThat(context2.getDatabaseObjects().size(), is(0));
-	}
-	
-	@Override
-	protected String getPropertiesFilePath(String hostName) {
-		if (hostName.equals("griffon.jiemamy.org")) {
-			return "/postgresql_griffon.properties";
-		}
-		return "/postgresql_local.properties";
-	}
-	
-	private DefaultDatabaseImportConfig newImportConfig() throws MalformedURLException {
-		DefaultDatabaseImportConfig config = new DefaultDatabaseImportConfig();
-		config.setDialect(new PostgresqlDialect());
-		config.setDriverJarPaths(new URL[] {
-			new File(getJarPath()).toURL()
-		});
-		config.setDriverClassName(getDriverClassName());
-		config.setUri(getConnectionUri());
-		config.setSchema("public");
-		config.setUsername(getUsername());
-		config.setPassword(getPassword());
-		return config;
 	}
 }
