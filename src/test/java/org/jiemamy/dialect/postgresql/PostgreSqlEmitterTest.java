@@ -34,7 +34,7 @@ import org.jiemamy.composer.exporter.DefaultSqlExportConfig;
 import org.jiemamy.model.column.Column;
 import org.jiemamy.model.datatype.DataTypeCategory;
 import org.jiemamy.model.datatype.DefaultTypeReference;
-import org.jiemamy.model.datatype.DefaultTypeVariant;
+import org.jiemamy.model.datatype.DefaultDataType;
 import org.jiemamy.model.datatype.TypeParameterKey;
 import org.jiemamy.model.datatype.TypeReference;
 import org.jiemamy.model.sql.SqlStatement;
@@ -98,14 +98,14 @@ public class PostgreSqlEmitterTest {
 	 */
 	@Test
 	public void test02_単純なテーブルを1つemitして確認() throws Exception {
-		DefaultTypeVariant varchar32 = new DefaultTypeVariant(VARCHAR);
+		DefaultDataType varchar32 = new DefaultDataType(VARCHAR);
 		varchar32.putParam(TypeParameterKey.SIZE, 32);
 		
 		// FORMAT-OFF
 		DefaultTableModel table = new Table("T_FOO")
-				.with(new Column("ID").whoseTypeIs(new DefaultTypeVariant(INTEGER)).build())
+				.with(new Column("ID").whoseTypeIs(new DefaultDataType(INTEGER)).build())
 				.with(new Column("NAME").whoseTypeIs(varchar32).build())
-				.with(new Column("HOGE").whoseTypeIs(new DefaultTypeVariant(INTEGER)).build())
+				.with(new Column("HOGE").whoseTypeIs(new DefaultDataType(INTEGER)).build())
 				.build();
 		// FORMAT-ON
 		context.store(table);
