@@ -30,6 +30,7 @@ import org.jiemamy.dialect.TokenResolver;
 import org.jiemamy.dialect.postgresql.experimental.parameter.DefaultIndexOption;
 import org.jiemamy.dialect.postgresql.experimental.parameter.IndexMethodType;
 import org.jiemamy.dialect.postgresql.experimental.parameter.IndexOption;
+import org.jiemamy.model.DatabaseObjectModel;
 import org.jiemamy.model.index.IndexColumnModel;
 import org.jiemamy.model.index.IndexModel;
 import org.jiemamy.model.sql.DefaultSqlStatement;
@@ -129,61 +130,29 @@ public class PostgreSqlEmitter extends DefaultSqlEmitter {
 		return new DefaultSqlStatement(tokens);
 	}
 	
-//	@Override
-//	protected SqlStatement emitDropEntityStatement(EntityModel entityModel) {
-//		SqlStatement stmt = super.emitDropEntityStatement(entityModel);
-//		return insertIfExists(stmt);
-//	}
-//	
-//	@Override
-//	protected SqlStatement emitDropIndexStatement(IndexModel indexModel) {
-//		SqlStatement stmt = super.emitDropIndexStatement(indexModel);
-//		return insertIfExists(stmt);
-//	}
-//	
-//	@Override
-//	protected SqlStatement emitDropSchemaStatement(String schemaName) {
-//		SqlStatement stmt = super.emitDropSchemaStatement(schemaName);
-//		return insertIfExists(stmt);
-//	}
+	@Override
+	protected SqlStatement emitDropEntityStatement(DatabaseObjectModel entityModel) {
+		SqlStatement stmt = super.emitDropEntityStatement(entityModel);
+		return insertIfExists(stmt);
+	}
 	
-//	@Override
-//	protected List<Token> emitIndexColumnClause(JiemamyContext context, IndexColumnModel indexColumnModel) {
-//		List<Token> tokens = Lists.newArrayList();
-//		EntityRef<? extends ColumnModel> columnRef = indexColumnModel.getColumnRef();
-//		ColumnModel columnModel = context.resolve(columnRef);
-//		tokens.add(Identifier.of(columnModel.getName()));
-//		if (indexColumnModel.hasAdapter(IndexColumnOption.class)) {
-//			// FIXME "CREATE INDEX IDX_EMP_NAME ON T_EMP(EMP_NAME DESC);" がエラーを起こす。原因不明。
-////			SortOrder sortOrder = indexColumnModel.getSortOrder();
-////			tokens.addAll(tokenResolver.resolve(sortOrder));
-//			
-//			IndexColumnOption indexColumnOption = indexColumnModel.getAdapter(IndexColumnOption.class);
-//			if (indexColumnOption.getNullOrder() != null) {
-//				NullOrder nullOrder = indexColumnOption.getNullOrder();
-//				tokens.add(Keyword.NULL);
-//				if (nullOrder == NullOrder.NULL_FIRST) {
-//					tokens.add(Keyword.of("FIRST"));
-//				} else if (nullOrder == NullOrder.NULL_LAST) {
-//					tokens.add(Keyword.of("LAST"));
-//				} else {
-//					logger.warn("unkwnown NullOrder: " + nullOrder);
-//					tokens.remove(tokens.size() - 1);
-//				}
-//			}
-//		} else {
-//			// FIXME "CREATE INDEX IDX_EMP_NAME ON T_EMP(EMP_NAME DESC);" がエラーを起こす。原因不明。
-////			SortOrder sortOrder = indexColumnModel.getSortOrder();
-////			tokens.addAll(tokenResolver.resolve(sortOrder));
-//		}
-//		return tokens;
-//	}
+	@Override
+	protected SqlStatement emitDropIndexStatement(IndexModel indexModel) {
+		SqlStatement stmt = super.emitDropIndexStatement(indexModel);
+		return insertIfExists(stmt);
+	}
 	
-	@SuppressWarnings("unused")
+	@Override
+	protected SqlStatement emitDropSchemaStatement(String schemaName) {
+		SqlStatement stmt = super.emitDropSchemaStatement(schemaName);
+		return insertIfExists(stmt);
+	}
+	
 	private SqlStatement insertIfExists(SqlStatement stmt) {
 		List<Token> tokens = stmt.toTokens();
-		tokens.add(2, Keyword.of("IF"));
-		tokens.add(3, Keyword.of("EXISTS"));
+		// THINK IF EXISTSを挿入してよいか？
+//		tokens.add(2, Keyword.of("IF"));
+//		tokens.add(3, Keyword.of("EXISTS"));
 		return new DefaultSqlStatement(tokens);
 	}
 }
