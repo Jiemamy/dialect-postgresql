@@ -103,9 +103,9 @@ public class PostgreSqlEmitterTest {
 		
 		// FORMAT-OFF
 		DefaultTableModel table = new Table("T_FOO")
-				.with(new Column("ID").whoseTypeIs(new DefaultDataType(INTEGER)).build())
-				.with(new Column("NAME").whoseTypeIs(varchar32).build())
-				.with(new Column("HOGE").whoseTypeIs(new DefaultDataType(INTEGER)).build())
+				.with(new Column("ID").type(new DefaultDataType(INTEGER)).build())
+				.with(new Column("NAME").type(varchar32).build())
+				.with(new Column("HOGE").type(new DefaultDataType(INTEGER)).build())
 				.build();
 		// FORMAT-ON
 		context.store(table);
