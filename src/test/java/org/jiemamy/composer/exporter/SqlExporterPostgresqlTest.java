@@ -33,9 +33,9 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.jiemamy.DefaultContextMetadata;
 import org.jiemamy.JiemamyContext;
 import org.jiemamy.JiemamyContextTest;
+import org.jiemamy.SimpleJmMetadata;
 import org.jiemamy.SqlFacet;
 import org.jiemamy.composer.Exporter;
 import org.jiemamy.dialect.postgresql.PostgresqlDialect;
@@ -89,13 +89,13 @@ public class SqlExporterPostgresqlTest {
 		deleteFile(OUTPUT_FILE);
 		assertThat(OUTPUT_FILE.exists(), is(false));
 		
-		DefaultContextMetadata meta = new DefaultContextMetadata();
+		SimpleJmMetadata meta = new SimpleJmMetadata();
 		meta.setDialectClassName(PostgresqlDialect.class.getName());
 		context.setMetadata(meta);
 		
 		BufferedReader reader = null;
 		try {
-			DefaultSqlExportConfig config = new DefaultSqlExportConfig();
+			SimpleSqlExportConfig config = new SimpleSqlExportConfig();
 			config.setOutputFile(OUTPUT_FILE);
 			config.setOverwrite(true);
 			exporter.exportModel(context, config);
@@ -127,13 +127,13 @@ public class SqlExporterPostgresqlTest {
 		FileUtils.deleteDirectory(NOT_EXISTS_DIR);
 		assertThat(NOT_EXISTS_DIR.exists(), is(false));
 		
-		DefaultContextMetadata meta = new DefaultContextMetadata();
+		SimpleJmMetadata meta = new SimpleJmMetadata();
 		meta.setDialectClassName(PostgresqlDialect.class.getName());
 		context.setMetadata(meta);
 		
 		BufferedReader reader = null;
 		try {
-			DefaultSqlExportConfig config = new DefaultSqlExportConfig();
+			SimpleSqlExportConfig config = new SimpleSqlExportConfig();
 			config.setOutputFile(OUTPUT_FILE_IN_NOT_EXISTS_DIR);
 			config.setOverwrite(true);
 			exporter.exportModel(context, config);

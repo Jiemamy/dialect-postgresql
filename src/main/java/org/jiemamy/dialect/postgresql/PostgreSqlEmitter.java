@@ -27,20 +27,20 @@ import org.jiemamy.dialect.DefaultSqlEmitter;
 import org.jiemamy.dialect.Dialect;
 import org.jiemamy.dialect.SqlEmitter;
 import org.jiemamy.dialect.TokenResolver;
-import org.jiemamy.dialect.postgresql.experimental.parameter.DefaultIndexOption;
 import org.jiemamy.dialect.postgresql.experimental.parameter.IndexMethodType;
 import org.jiemamy.dialect.postgresql.experimental.parameter.IndexOption;
-import org.jiemamy.model.DatabaseObjectModel;
-import org.jiemamy.model.index.IndexColumnModel;
-import org.jiemamy.model.index.IndexModel;
-import org.jiemamy.model.sql.DefaultSqlStatement;
+import org.jiemamy.dialect.postgresql.experimental.parameter.SimpleIndexOption;
+import org.jiemamy.model.DbObject;
+import org.jiemamy.model.index.JmIndex;
+import org.jiemamy.model.index.JmIndexColumn;
 import org.jiemamy.model.sql.Identifier;
 import org.jiemamy.model.sql.Keyword;
 import org.jiemamy.model.sql.Literal;
 import org.jiemamy.model.sql.Separator;
+import org.jiemamy.model.sql.SimpleSqlStatement;
 import org.jiemamy.model.sql.SqlStatement;
 import org.jiemamy.model.sql.Token;
-import org.jiemamy.model.table.TableModel;
+import org.jiemamy.model.table.JmTable;
 
 /**
  * PostgreSQL用の{@link SqlEmitter}実装クラス。
@@ -71,15 +71,15 @@ public class PostgreSqlEmitter extends DefaultSqlEmitter {
 	}
 	
 	@Override
-	protected SqlStatement emitCreateIndexStatement(JiemamyContext context, TableModel tableModel, IndexModel indexModel) {
-		IndexOption indexOption = indexModel.getParam(DefaultIndexOption.KEY);
+	protected SqlStatement emitCreateIndexStatement(JiemamyContext context, JmTable table, JmIndex index) {
+		IndexOption indexOption = index.getParam(SimpleIndexOption.KEY);
 		if (indexOption == null) {
-			return super.emitCreateIndexStatement(context, tableModel, indexModel);
+			return super.emitCreateIndexStatement(context, table, index);
 		}
 		
 		List<Token> tokens = Lists.newArrayList();
 		tokens.add(Keyword.CREATE);
-		if (indexModel.isUnique()) {
+		if (index.isUnique()) {
 			tokens.add(Keyword.UNIQUE);
 		}
 		tokens.add(Keyword.INDEX);
@@ -88,9 +88,9 @@ public class PostgreSqlEmitter extends DefaultSqlEmitter {
 			tokens.add(Keyword.of("CONCURRENTLY"));
 		}
 		
-		tokens.add(Identifier.of(indexModel.getName()));
+		tokens.add(Identifier.of(index.getName()));
 		tokens.add(Keyword.ON);
-		tokens.add(Identifier.of(tableModel.getName()));
+		tokens.add(Identifier.of(table.getName()));
 		
 		if (indexOption.getIndexMethodType() != null) {
 			IndexMethodType indexMethodType = indexOption.getIndexMethodType();
@@ -100,11 +100,11 @@ public class PostgreSqlEmitter extends DefaultSqlEmitter {
 		
 		tokens.add(Separator.LEFT_PAREN);
 		
-		for (IndexColumnModel indexColumnModel : indexModel.getIndexColumns()) {
-			tokens.addAll(emitIndexColumnClause(context, indexColumnModel));
+		for (JmIndexColumn indexColumn : index.getIndexColumns()) {
+			tokens.addAll(emitIndexColumnClause(context, indexColumn));
 		}
 		
-		if (indexModel.getIndexColumns().isEmpty() == false) {
+		if (index.getIndexColumns().isEmpty() == false) {
 			tokens.remove(tokens.size() - 1);
 		}
 		tokens.add(Separator.RIGHT_PAREN);
@@ -127,18 +127,18 @@ public class PostgreSqlEmitter extends DefaultSqlEmitter {
 		}
 		
 		tokens.add(Separator.SEMICOLON);
-		return new DefaultSqlStatement(tokens);
+		return new SimpleSqlStatement(tokens);
 	}
 	
 	@Override
-	protected SqlStatement emitDropEntityStatement(DatabaseObjectModel entityModel) {
-		SqlStatement stmt = super.emitDropEntityStatement(entityModel);
+	protected SqlStatement emitDropDbObjectStatement(DbObject dbObject) {
+		SqlStatement stmt = super.emitDropDbObjectStatement(dbObject);
 		return insertIfExists(stmt);
 	}
 	
 	@Override
-	protected SqlStatement emitDropIndexStatement(IndexModel indexModel) {
-		SqlStatement stmt = super.emitDropIndexStatement(indexModel);
+	protected SqlStatement emitDropIndexStatement(JmIndex index) {
+		SqlStatement stmt = super.emitDropIndexStatement(index);
 		return insertIfExists(stmt);
 	}
 	
@@ -153,6 +153,6 @@ public class PostgreSqlEmitter extends DefaultSqlEmitter {
 		// THINK IF EXISTSを挿入してよいか？
 //		tokens.add(2, Keyword.of("IF"));
 //		tokens.add(3, Keyword.of("EXISTS"));
-		return new DefaultSqlStatement(tokens);
+		return new SimpleSqlStatement(tokens);
 	}
 }

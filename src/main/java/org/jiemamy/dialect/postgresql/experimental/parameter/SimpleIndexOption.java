@@ -18,26 +18,26 @@
  */
 package org.jiemamy.dialect.postgresql.experimental.parameter;
 
-import org.jiemamy.model.index.IndexModel;
+import org.jiemamy.model.index.JmIndex;
 import org.jiemamy.model.parameter.Converter;
 import org.jiemamy.model.parameter.ParameterKey;
 
 /**
- * {@link IndexModel}に対するPostgreSQL特有の設定項目実装クラス。
+ * {@link JmIndex}に対するPostgreSQL特有の設定項目実装クラス。
  * 
  * @author daisuke
  */
-public final class DefaultIndexOption extends AbstractPostgresObjectOption implements IndexOption {
+public final class SimpleIndexOption extends AbstractPostgresObjectOption implements IndexOption {
 	
-	public static final ParameterKey<DefaultIndexOption> KEY = new ParameterKey<DefaultIndexOption>(
-			new Converter<DefaultIndexOption>() {
+	public static final ParameterKey<SimpleIndexOption> KEY = new ParameterKey<SimpleIndexOption>(
+			new Converter<SimpleIndexOption>() {
 				
-				public String toString(DefaultIndexOption obj) {
+				public String toString(SimpleIndexOption obj) {
 					// TODO Auto-generated method stub
 					return null;
 				}
 				
-				public DefaultIndexOption valueOf(String str) {
+				public SimpleIndexOption valueOf(String str) {
 					// TODO Auto-generated method stub
 					return null;
 				}

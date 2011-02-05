@@ -18,25 +18,25 @@
  */
 package org.jiemamy.dialect.postgresql;
 
-import static org.jiemamy.model.datatype.DataTypeCategory.BIT;
-import static org.jiemamy.model.datatype.DataTypeCategory.BLOB;
-import static org.jiemamy.model.datatype.DataTypeCategory.BOOLEAN;
-import static org.jiemamy.model.datatype.DataTypeCategory.CHARACTER;
-import static org.jiemamy.model.datatype.DataTypeCategory.CLOB;
-import static org.jiemamy.model.datatype.DataTypeCategory.DATE;
-import static org.jiemamy.model.datatype.DataTypeCategory.DECIMAL;
-import static org.jiemamy.model.datatype.DataTypeCategory.DOUBLE;
-import static org.jiemamy.model.datatype.DataTypeCategory.FLOAT;
-import static org.jiemamy.model.datatype.DataTypeCategory.INTEGER;
-import static org.jiemamy.model.datatype.DataTypeCategory.INTERVAL;
-import static org.jiemamy.model.datatype.DataTypeCategory.NUMERIC;
-import static org.jiemamy.model.datatype.DataTypeCategory.OTHER;
-import static org.jiemamy.model.datatype.DataTypeCategory.REAL;
-import static org.jiemamy.model.datatype.DataTypeCategory.SMALLINT;
-import static org.jiemamy.model.datatype.DataTypeCategory.TIME;
-import static org.jiemamy.model.datatype.DataTypeCategory.TIMESTAMP;
-import static org.jiemamy.model.datatype.DataTypeCategory.VARBIT;
-import static org.jiemamy.model.datatype.DataTypeCategory.VARCHAR;
+import static org.jiemamy.model.datatype.RawTypeCategory.BIT;
+import static org.jiemamy.model.datatype.RawTypeCategory.BLOB;
+import static org.jiemamy.model.datatype.RawTypeCategory.BOOLEAN;
+import static org.jiemamy.model.datatype.RawTypeCategory.CHARACTER;
+import static org.jiemamy.model.datatype.RawTypeCategory.CLOB;
+import static org.jiemamy.model.datatype.RawTypeCategory.DATE;
+import static org.jiemamy.model.datatype.RawTypeCategory.DECIMAL;
+import static org.jiemamy.model.datatype.RawTypeCategory.DOUBLE;
+import static org.jiemamy.model.datatype.RawTypeCategory.FLOAT;
+import static org.jiemamy.model.datatype.RawTypeCategory.INTEGER;
+import static org.jiemamy.model.datatype.RawTypeCategory.INTERVAL;
+import static org.jiemamy.model.datatype.RawTypeCategory.NUMERIC;
+import static org.jiemamy.model.datatype.RawTypeCategory.OTHER;
+import static org.jiemamy.model.datatype.RawTypeCategory.REAL;
+import static org.jiemamy.model.datatype.RawTypeCategory.SMALLINT;
+import static org.jiemamy.model.datatype.RawTypeCategory.TIME;
+import static org.jiemamy.model.datatype.RawTypeCategory.TIMESTAMP;
+import static org.jiemamy.model.datatype.RawTypeCategory.VARBIT;
+import static org.jiemamy.model.datatype.RawTypeCategory.VARCHAR;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,7 +49,7 @@ import org.jiemamy.dialect.DefaultDatabaseMetadataParser;
 import org.jiemamy.dialect.SqlEmitter;
 import org.jiemamy.dialect.TypeParameterSpec;
 import org.jiemamy.dialect.TypeParameterSpec.Necessity;
-import org.jiemamy.model.datatype.DefaultTypeReference;
+import org.jiemamy.model.datatype.SimpleRawTypeDescriptor;
 import org.jiemamy.model.datatype.TypeParameterKey;
 import org.jiemamy.validator.CompositeValidator;
 import org.jiemamy.validator.Validator;
@@ -65,60 +65,60 @@ public class PostgresqlDialect extends AbstractDialect {
 	
 	static {
 		// FORMAT-OFF
-		typeEntries.add(new Entry(new DefaultTypeReference(INTEGER, "INTEGER", "int4"), Arrays.asList(
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(INTEGER, "INTEGER", "int4"), Arrays.asList(
 			new TypeParameterSpec(TypeParameterKey.SERIAL, Necessity.OPTIONAL)
 		)));
-		typeEntries.add(new Entry(new DefaultTypeReference(INTEGER, "BIGINT", "int8"), Arrays.asList(
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(INTEGER, "BIGINT", "int8"), Arrays.asList(
 			new TypeParameterSpec(TypeParameterKey.SERIAL, Necessity.OPTIONAL)
 		)));
-		typeEntries.add(new Entry(new DefaultTypeReference(SMALLINT)));
-		typeEntries.add(new Entry(new DefaultTypeReference(NUMERIC), Arrays.asList(
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(SMALLINT)));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(NUMERIC), Arrays.asList(
 			new TypeParameterSpec(TypeParameterKey.PRECISION, Necessity.REQUIRED),
 			new TypeParameterSpec(TypeParameterKey.SCALE, Necessity.REQUIRED)
 		)));
-		typeEntries.add(new Entry(new DefaultTypeReference(DECIMAL)));
-		typeEntries.add(new Entry(new DefaultTypeReference(FLOAT, "REAL"), Arrays.asList(
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(DECIMAL)));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(FLOAT, "REAL"), Arrays.asList(
 			new TypeParameterSpec(TypeParameterKey.PRECISION, Necessity.REQUIRED),
 			new TypeParameterSpec(TypeParameterKey.SCALE, Necessity.REQUIRED)
 		)));
-		typeEntries.add(new Entry(new DefaultTypeReference(REAL)));
-		typeEntries.add(new Entry(new DefaultTypeReference(DOUBLE, "DOUBLE PRECISION")));
-		typeEntries.add(new Entry(new DefaultTypeReference(BIT), Arrays.asList(
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(REAL)));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(DOUBLE, "DOUBLE PRECISION")));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(BIT), Arrays.asList(
 			new TypeParameterSpec(TypeParameterKey.SIZE, Necessity.REQUIRED)
 		)));
-		typeEntries.add(new Entry(new DefaultTypeReference(CHARACTER), Arrays.asList(
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(CHARACTER), Arrays.asList(
 			new TypeParameterSpec(TypeParameterKey.SIZE, Necessity.REQUIRED)
 		)));
-		typeEntries.add(new Entry(new DefaultTypeReference(VARCHAR), Arrays.asList(
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(VARCHAR), Arrays.asList(
 			new TypeParameterSpec(TypeParameterKey.SIZE, Necessity.REQUIRED)
 		)));
-		typeEntries.add(new Entry(new DefaultTypeReference(CLOB, "TEXT")));
-		typeEntries.add(new Entry(new DefaultTypeReference(BLOB, "BYTEA")));
-		typeEntries.add(new Entry(new DefaultTypeReference(VARBIT), Arrays.asList(
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(CLOB, "TEXT")));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(BLOB, "BYTEA")));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(VARBIT), Arrays.asList(
 			new TypeParameterSpec(TypeParameterKey.SIZE, Necessity.REQUIRED)
 		)));
-		typeEntries.add(new Entry(new DefaultTypeReference(BOOLEAN)));
-		typeEntries.add(new Entry(new DefaultTypeReference(DATE)));
-		typeEntries.add(new Entry(new DefaultTypeReference(TIME), Arrays.asList(
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(BOOLEAN)));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(DATE)));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(TIME), Arrays.asList(
 			new TypeParameterSpec(TypeParameterKey.WITH_TIMEZONE, Necessity.REQUIRED)
 		)));
-		typeEntries.add(new Entry(new DefaultTypeReference(TIMESTAMP), Arrays.asList(
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(TIMESTAMP), Arrays.asList(
 			new TypeParameterSpec(TypeParameterKey.WITH_TIMEZONE, Necessity.REQUIRED)
 		)));
-		typeEntries.add(new Entry(new DefaultTypeReference(INTERVAL)));
-		typeEntries.add(new Entry(new DefaultTypeReference(OTHER, "UUID")));
-		typeEntries.add(new Entry(new DefaultTypeReference(OTHER, "MACADDR")));
-		typeEntries.add(new Entry(new DefaultTypeReference(OTHER, "MONEY")));
-		typeEntries.add(new Entry(new DefaultTypeReference(OTHER, "INET")));
-		typeEntries.add(new Entry(new DefaultTypeReference(OTHER, "CIDR")));
-		typeEntries.add(new Entry(new DefaultTypeReference(OTHER, "XML")));
-		typeEntries.add(new Entry(new DefaultTypeReference(OTHER, "LINE")));
-		typeEntries.add(new Entry(new DefaultTypeReference(OTHER, "LSEG")));
-		typeEntries.add(new Entry(new DefaultTypeReference(OTHER, "CIRCLE")));
-		typeEntries.add(new Entry(new DefaultTypeReference(OTHER, "BOX")));
-		typeEntries.add(new Entry(new DefaultTypeReference(OTHER, "PATH")));
-		typeEntries.add(new Entry(new DefaultTypeReference(OTHER, "POINT")));
-		typeEntries.add(new Entry(new DefaultTypeReference(OTHER, "POLYGON")));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(INTERVAL)));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "UUID")));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "MACADDR")));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "MONEY")));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "INET")));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "CIDR")));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "XML")));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "LINE")));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "LSEG")));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "CIRCLE")));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "BOX")));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "PATH")));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "POINT")));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "POLYGON")));
 		// FORMAT-ON
 	}
 	

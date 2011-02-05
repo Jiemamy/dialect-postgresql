@@ -18,10 +18,10 @@
  */
 package org.jiemamy.dialect.postgresql.experimental.parameter;
 
-import org.jiemamy.model.table.TableModel;
+import org.jiemamy.model.table.JmTable;
 
 /**
- * {@link TableModel}に対するオプションモデル。
+ * {@link JmTable}に対するオプションモデル。
  * 
  * @author daisuke
  */

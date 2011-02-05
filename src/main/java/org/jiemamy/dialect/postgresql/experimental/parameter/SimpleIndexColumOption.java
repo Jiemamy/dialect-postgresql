@@ -23,7 +23,7 @@ package org.jiemamy.dialect.postgresql.experimental.parameter;
  * 
  * @author daisuke
  */
-public final class DefaultIndexColumOption implements IndexColumnOption {
+public final class SimpleIndexColumOption implements IndexColumnOption {
 	
 	private NullOrder nullOrder;
 	

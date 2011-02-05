@@ -18,10 +18,10 @@
  */
 package org.jiemamy.dialect.postgresql.experimental.parameter;
 
-import org.jiemamy.model.index.IndexModel;
+import org.jiemamy.model.index.JmIndex;
 
 /**
- * {@link IndexModel}に対するPostgreSQL特有の設定項目インターフェイス。
+ * {@link JmIndex}に対するPostgreSQL特有の設定項目インターフェイス。
  * 
  * @author daisuke
  */
