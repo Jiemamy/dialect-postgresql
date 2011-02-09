@@ -18,6 +18,8 @@
  */
 package org.jiemamy.dialect.postgresql.experimental.parameter;
 
+import org.apache.commons.lang.Validate;
+
 import org.jiemamy.model.index.JmIndex;
 import org.jiemamy.model.parameter.Converter;
 import org.jiemamy.model.parameter.ParameterKey;
@@ -29,15 +31,18 @@ import org.jiemamy.model.parameter.ParameterKey;
  */
 public final class SimpleIndexOption extends AbstractPostgresObjectOption implements IndexOption {
 	
+	/** インデックスオプションを表すパラメータ用キー */
 	public static final ParameterKey<SimpleIndexOption> KEY = new ParameterKey<SimpleIndexOption>(
 			new Converter<SimpleIndexOption>() {
 				
 				public String toString(SimpleIndexOption obj) {
+					Validate.notNull(obj);
 					// TODO Auto-generated method stub
 					return null;
 				}
 				
 				public SimpleIndexOption valueOf(String str) {
+					Validate.notNull(str);
 					// TODO Auto-generated method stub
 					return null;
 				}
