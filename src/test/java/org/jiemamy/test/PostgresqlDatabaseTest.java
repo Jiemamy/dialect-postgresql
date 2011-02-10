@@ -28,7 +28,7 @@ import org.jiemamy.composer.importer.SimpleDbImportConfig;
 import org.jiemamy.dialect.postgresql.PostgresqlDialect;
 
 /**
- * TODO for daisuke
+ * 実データベースのPostgreSQLに接続して行うインテグレーションテスト用の抽象実装クラス。
  * 
  * @version $Id$
  * @author daisuke
