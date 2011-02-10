@@ -25,6 +25,7 @@ import static org.junit.Assert.assertThat;
 import java.io.File;
 import java.io.FileReader;
 import java.sql.Connection;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.dbutils.DbUtils;
@@ -38,6 +39,7 @@ import org.jiemamy.composer.exporter.SimpleSqlExportConfig;
 import org.jiemamy.composer.exporter.SqlExporter;
 import org.jiemamy.composer.importer.DbImporter;
 import org.jiemamy.model.DbObject;
+import org.jiemamy.model.dataset.JmDataSet;
 import org.jiemamy.test.PostgresqlDatabaseTest;
 import org.jiemamy.test.TestModelBuilders;
 import org.jiemamy.utils.DbCleaner;
@@ -69,6 +71,10 @@ public class PostgresqlDatabaseIntegrationTest extends PostgresqlDatabaseTest {
 		Set<DbObject> dbObjects = context.getDbObjects();
 		for (DbObject dbObject : dbObjects) {
 			logger.info(dbObject.toString());
+		}
+		List<JmDataSet> dataSets = context.getDataSets();
+		for (JmDataSet dataSet : dataSets) {
+			logger.info(dataSet.toString());
 		}
 	}
 	
