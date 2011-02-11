@@ -152,7 +152,7 @@ public class PostgresqlDialect extends AbstractDialect {
 	}
 	
 	public SqlEmitter getSqlEmitter() {
-		return new PostgreSqlEmitter(this);
+		return new PostgreSqlEmitter(this, new PostgreSqlTokenResolver());
 	}
 	
 	@Override
