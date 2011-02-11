@@ -38,7 +38,7 @@ import static org.jiemamy.model.datatype.RawTypeCategory.TIMESTAMP;
 import static org.jiemamy.model.datatype.RawTypeCategory.VARBIT;
 import static org.jiemamy.model.datatype.RawTypeCategory.VARCHAR;
 
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -46,9 +46,8 @@ import com.google.common.collect.Lists;
 import org.jiemamy.dialect.AbstractDialect;
 import org.jiemamy.dialect.DatabaseMetadataParser;
 import org.jiemamy.dialect.DefaultDatabaseMetadataParser;
+import org.jiemamy.dialect.Necessity;
 import org.jiemamy.dialect.SqlEmitter;
-import org.jiemamy.dialect.TypeParameterSpec;
-import org.jiemamy.dialect.TypeParameterSpec.Necessity;
 import org.jiemamy.model.datatype.SimpleRawTypeDescriptor;
 import org.jiemamy.model.datatype.TypeParameterKey;
 import org.jiemamy.validator.CompositeValidator;
@@ -59,52 +58,64 @@ import org.jiemamy.validator.Validator;
  * 
  * @author daisuke
  */
+@SuppressWarnings("serial")
 public class PostgresqlDialect extends AbstractDialect {
 	
 	private static List<Entry> typeEntries = Lists.newArrayList();
 	
 	static {
 		// FORMAT-OFF
-		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(INTEGER, "INTEGER", "int4"), Arrays.asList(
-			new TypeParameterSpec(TypeParameterKey.SERIAL, Necessity.OPTIONAL)
-		)));
-		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(INTEGER, "BIGINT", "int8"), Arrays.asList(
-			new TypeParameterSpec(TypeParameterKey.SERIAL, Necessity.OPTIONAL)
-		)));
+		// CHECKSTYLE:OFF
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(INTEGER, "INTEGER", "int4"),
+				new HashMap<TypeParameterKey<?>, Necessity>() {{
+						put(TypeParameterKey.SERIAL, Necessity.OPTIONAL);
+				}}));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(INTEGER, "BIGINT", "int8"),
+				new HashMap<TypeParameterKey<?>, Necessity>() {{
+						put(TypeParameterKey.SERIAL, Necessity.OPTIONAL);
+				}}));
 		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(SMALLINT)));
-		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(NUMERIC), Arrays.asList(
-			new TypeParameterSpec(TypeParameterKey.PRECISION, Necessity.REQUIRED),
-			new TypeParameterSpec(TypeParameterKey.SCALE, Necessity.REQUIRED)
-		)));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(NUMERIC),
+				new HashMap<TypeParameterKey<?>, Necessity>() {{
+						put(TypeParameterKey.PRECISION, Necessity.REQUIRED);
+						put(TypeParameterKey.SCALE, Necessity.REQUIRED);
+				}}));
 		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(DECIMAL)));
-		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(FLOAT, "REAL"), Arrays.asList(
-			new TypeParameterSpec(TypeParameterKey.PRECISION, Necessity.REQUIRED),
-			new TypeParameterSpec(TypeParameterKey.SCALE, Necessity.REQUIRED)
-		)));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(FLOAT, "REAL"),
+				new HashMap<TypeParameterKey<?>, Necessity>() {{
+						put(TypeParameterKey.PRECISION, Necessity.REQUIRED);
+						put(TypeParameterKey.SCALE, Necessity.REQUIRED);
+				}}));
 		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(REAL)));
 		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(DOUBLE, "DOUBLE PRECISION")));
-		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(BIT), Arrays.asList(
-			new TypeParameterSpec(TypeParameterKey.SIZE, Necessity.REQUIRED)
-		)));
-		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(CHARACTER), Arrays.asList(
-			new TypeParameterSpec(TypeParameterKey.SIZE, Necessity.REQUIRED)
-		)));
-		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(VARCHAR), Arrays.asList(
-			new TypeParameterSpec(TypeParameterKey.SIZE, Necessity.REQUIRED)
-		)));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(BIT),
+				new HashMap<TypeParameterKey<?>, Necessity>() {{
+						put(TypeParameterKey.SIZE, Necessity.REQUIRED);
+				}}));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(CHARACTER),
+				new HashMap<TypeParameterKey<?>, Necessity>() {{
+						put(TypeParameterKey.SIZE, Necessity.REQUIRED);
+				}}));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(VARCHAR),
+				new HashMap<TypeParameterKey<?>, Necessity>() {{
+						put(TypeParameterKey.SIZE, Necessity.REQUIRED);
+				}}));
 		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(CLOB, "TEXT")));
 		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(BLOB, "BYTEA")));
-		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(VARBIT), Arrays.asList(
-			new TypeParameterSpec(TypeParameterKey.SIZE, Necessity.REQUIRED)
-		)));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(VARBIT),
+				new HashMap<TypeParameterKey<?>, Necessity>() {{
+						put(TypeParameterKey.SIZE, Necessity.REQUIRED);
+				}}));
 		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(BOOLEAN)));
 		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(DATE)));
-		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(TIME), Arrays.asList(
-			new TypeParameterSpec(TypeParameterKey.WITH_TIMEZONE, Necessity.REQUIRED)
-		)));
-		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(TIMESTAMP), Arrays.asList(
-			new TypeParameterSpec(TypeParameterKey.WITH_TIMEZONE, Necessity.REQUIRED)
-		)));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(TIME),
+				new HashMap<TypeParameterKey<?>, Necessity>() {{
+						put(TypeParameterKey.WITH_TIMEZONE, Necessity.REQUIRED);
+				}}));
+		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(TIMESTAMP),
+				new HashMap<TypeParameterKey<?>, Necessity>() {{
+						put(TypeParameterKey.WITH_TIMEZONE, Necessity.REQUIRED);
+				}}));
 		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(INTERVAL)));
 		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "UUID")));
 		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "MACADDR")));
@@ -119,6 +130,7 @@ public class PostgresqlDialect extends AbstractDialect {
 		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "PATH")));
 		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "POINT")));
 		typeEntries.add(new Entry(new SimpleRawTypeDescriptor(OTHER, "POLYGON")));
+		// CHECKSTYLE:ON
 		// FORMAT-ON
 	}
 	
