@@ -48,7 +48,7 @@ public class PostgreSqlTokenResolver extends DefaultTokenResolver {
 			if (type.getRawTypeDescriptor().getTypeName().equals("INTEGER")) {
 				result.add(Keyword.of("SERIAL"));
 				return result;
-			} else if (type.getRawTypeDescriptor().getTypeName().equals("BIGINTEGER")) {
+			} else if (type.getRawTypeDescriptor().getTypeName().equals("BIGINT")) {
 				result.add(Keyword.of("BIGSERIAL"));
 				return result;
 			}
