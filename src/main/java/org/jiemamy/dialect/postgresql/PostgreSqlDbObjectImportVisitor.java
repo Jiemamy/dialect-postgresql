@@ -41,6 +41,9 @@ import org.jiemamy.utils.sql.metadata.TypeSafeDatabaseMetaData;
  */
 public class PostgreSqlDbObjectImportVisitor extends DefaultDbObjectImportVisitor {
 	
+	private String schema;
+	
+
 	/**
 	 * インスタンスを生成する。
 	 * 
@@ -73,8 +76,9 @@ public class PostgreSqlDbObjectImportVisitor extends DefaultDbObjectImportVisito
 	String getViewDefinition(Connection conn, String viewName) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement("SELECT * FROM pg_views WHERE viewname = ?;");
-			ps.setString(1, viewName);
+			ps = conn.prepareStatement("SELECT * FROM pg_views WHERE schemaname = ? AND viewname = ?;");
+			ps.setString(1, schema);
+			ps.setString(2, viewName);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				return rs.getString("definition");
@@ -87,6 +91,10 @@ public class PostgreSqlDbObjectImportVisitor extends DefaultDbObjectImportVisito
 		}
 	}
 	
+	void setSchema(String schema) {
+		this.schema = schema;
+	}
+	
 	// TODO すまぬ、無茶しているｗ  TypeSafeDatabaseMetaData#getConnection():Connection があればよかった…。
 	private Connection getConnection() throws NoSuchFieldException, IllegalAccessException, SQLException {
 		Field field = TypeSafeDatabaseMetaData.class.getDeclaredField("meta");
@@ -95,5 +103,4 @@ public class PostgreSqlDbObjectImportVisitor extends DefaultDbObjectImportVisito
 		Connection connection = meta.getConnection();
 		return connection;
 	}
-	
 }

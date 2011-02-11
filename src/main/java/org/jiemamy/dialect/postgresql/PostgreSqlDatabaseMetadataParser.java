@@ -18,9 +18,17 @@
  */
 package org.jiemamy.dialect.postgresql;
 
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
+
+import org.apache.commons.lang.Validate;
+
+import org.jiemamy.JiemamyContext;
 import org.jiemamy.dialect.DefaultDatabaseMetadataParser;
 import org.jiemamy.dialect.DefaultForeignKeyImportVisitor;
 import org.jiemamy.dialect.Dialect;
+import org.jiemamy.dialect.ForeignKeyImportVisitor;
+import org.jiemamy.dialect.ParseMetadataConfig;
 
 /**
  * TODO for daisuke
@@ -30,12 +38,35 @@ import org.jiemamy.dialect.Dialect;
  */
 public class PostgreSqlDatabaseMetadataParser extends DefaultDatabaseMetadataParser {
 	
+	private ParseMetadataConfig config;
+	
+	private final PostgreSqlDbObjectImportVisitor dbObjectImportVisitor;
+	
+
 	/**
 	 * インスタンスを生成する。
 	 * 
 	 * @param dialect {@link Dialect}
 	 */
 	public PostgreSqlDatabaseMetadataParser(PostgresqlDialect dialect) {
-		super(new PostgreSqlDbObjectImportVisitor(dialect), new DefaultForeignKeyImportVisitor(dialect));
+		this(new PostgreSqlDbObjectImportVisitor(dialect), new DefaultForeignKeyImportVisitor(dialect));
+	}
+	
+	// private constructor capture idiom
+	private PostgreSqlDatabaseMetadataParser(PostgreSqlDbObjectImportVisitor dbObjectImportVisitor,
+			ForeignKeyImportVisitor foreignKeyImportVisitor) {
+		super(dbObjectImportVisitor, foreignKeyImportVisitor);
+		this.dbObjectImportVisitor = dbObjectImportVisitor;
+	}
+	
+	@Override
+	public void parseMetadata(JiemamyContext context, DatabaseMetaData meta, ParseMetadataConfig config)
+			throws SQLException {
+		Validate.notNull(context);
+		Validate.notNull(meta);
+		Validate.notNull(config);
+		
+		dbObjectImportVisitor.setSchema(config.getSchema());
+		super.parseMetadata(context, meta, config);
 	}
 }
