@@ -28,6 +28,8 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Set;
 
+import com.google.common.collect.Iterables;
+
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
@@ -35,11 +37,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.jiemamy.JiemamyContext;
+import org.jiemamy.SimpleJmMetadata;
+import org.jiemamy.SqlFacet;
 import org.jiemamy.composer.exporter.SimpleSqlExportConfig;
 import org.jiemamy.composer.exporter.SqlExporter;
 import org.jiemamy.composer.importer.DbImporter;
 import org.jiemamy.model.DbObject;
+import org.jiemamy.model.column.JmColumnBuilder;
+import org.jiemamy.model.constraint.SimpleJmPrimaryKeyConstraint;
 import org.jiemamy.model.dataset.JmDataSet;
+import org.jiemamy.model.datatype.RawTypeCategory;
+import org.jiemamy.model.datatype.RawTypeDescriptor;
+import org.jiemamy.model.datatype.SimpleDataType;
+import org.jiemamy.model.datatype.SimpleRawTypeDescriptor;
+import org.jiemamy.model.datatype.TypeParameterKey;
+import org.jiemamy.model.table.JmTable;
+import org.jiemamy.model.table.JmTableBuilder;
+import org.jiemamy.model.table.SimpleJmTable;
+import org.jiemamy.model.view.JmView;
+import org.jiemamy.model.view.SimpleJmView;
 import org.jiemamy.test.PostgresqlDatabaseTest;
 import org.jiemamy.test.TestModelBuilders;
 import org.jiemamy.utils.DbCleaner;
@@ -54,6 +70,14 @@ import org.jiemamy.utils.sql.SqlExecutor;
 public class PostgresqlDatabaseIntegrationTest extends PostgresqlDatabaseTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(PostgresqlDatabaseIntegrationTest.class);
+	
+	private static final RawTypeDescriptor INTEGER = new SimpleRawTypeDescriptor(RawTypeCategory.INTEGER, "INTEGER",
+			"int4");
+	
+	private static final RawTypeDescriptor VARCHAR = new SimpleRawTypeDescriptor(RawTypeCategory.VARCHAR);
+	
+	private static final String VIEW_DEFINITION =
+			"SELECT t_foo.id, t_foo.name, t_foo.hoge FROM t_foo WHERE (t_foo.id > 10);";
 	
 
 	/**
@@ -125,5 +149,79 @@ public class PostgresqlDatabaseIntegrationTest extends PostgresqlDatabaseTest {
 		JiemamyContext context2 = new JiemamyContext();
 		assertThat(new DbImporter().importModel(context2, newImportConfig()), is(true));
 		assertThat(context2.getDbObjects().size(), is(0));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_view() throws Exception {
+		DbCleaner.clean(newImportConfig());
+		
+		SimpleDataType varchar32 = new SimpleDataType(VARCHAR);
+		varchar32.putParam(TypeParameterKey.SIZE, 32);
+		
+		SimpleDataType aiInteger = new SimpleDataType(INTEGER);
+		aiInteger.putParam(TypeParameterKey.SERIAL, true);
+		
+		JiemamyContext context = new JiemamyContext(SqlFacet.PROVIDER);
+		SimpleJmMetadata meta = new SimpleJmMetadata();
+		meta.setDialectClassName(PostgresqlDialect.class.getName());
+		context.setMetadata(meta);
+		
+		{
+			// FORMAT-OFF
+			SimpleJmTable table = new JmTableBuilder("T_FOO")
+					.with(new JmColumnBuilder("ID").type(aiInteger).build())
+					.with(new JmColumnBuilder("NAME").type(varchar32).build())
+					.with(new JmColumnBuilder("HOGE").type(new SimpleDataType(INTEGER)).build())
+					.build();
+			// FORMAT-ON
+			table.store(SimpleJmPrimaryKeyConstraint.of(table.getColumn("ID")));
+			context.store(table);
+			
+			SimpleJmView view = new SimpleJmView();
+			view.setName("V_BAR");
+			view.setDefinition(VIEW_DEFINITION);
+			context.store(view);
+		}
+		
+		File outFile = new File("target/testresult/PostgreSqlDatabaseTest_test04.sql");
+		SimpleSqlExportConfig config = new SimpleSqlExportConfig();
+		config.setDataSetIndex(0);
+		config.setEmitDropStatements(false);
+		config.setOutputFile(outFile);
+		config.setOverwrite(true);
+		
+		new SqlExporter().exportModel(context, config);
+		
+		Connection connection = null;
+		FileReader fileReader = null;
+		try {
+			connection = getConnection();
+			SqlExecutor sqlExecutor = new SqlExecutor(connection);
+			fileReader = new FileReader(outFile);
+			sqlExecutor.execute(fileReader);
+		} finally {
+			IOUtils.closeQuietly(fileReader);
+			DbUtils.closeQuietly(connection);
+		}
+		
+		connection = null;
+		try {
+			DbImporter importer = new DbImporter();
+			JiemamyContext imported = new JiemamyContext();
+			boolean importModel = importer.importModel(imported, newImportConfig());
+			assertThat(importModel, is(true));
+			JmTable importedTable = imported.getTable("t_foo");
+			assertThat(importedTable.getName(), is("t_foo"));
+			JmView importedView = Iterables.getOnlyElement(imported.getViews());
+			assertThat(importedView.getName(), is("v_bar"));
+			assertThat(importedView.getDefinition(), is(VIEW_DEFINITION));
+		} finally {
+			DbUtils.closeQuietly(connection);
+		}
 	}
 }

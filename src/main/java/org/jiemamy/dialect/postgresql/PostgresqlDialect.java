@@ -45,7 +45,6 @@ import com.google.common.collect.Lists;
 
 import org.jiemamy.dialect.AbstractDialect;
 import org.jiemamy.dialect.DatabaseMetadataParser;
-import org.jiemamy.dialect.DefaultDatabaseMetadataParser;
 import org.jiemamy.dialect.Necessity;
 import org.jiemamy.dialect.SqlEmitter;
 import org.jiemamy.model.datatype.SimpleRawTypeDescriptor;
@@ -143,8 +142,7 @@ public class PostgresqlDialect extends AbstractDialect {
 	}
 	
 	public DatabaseMetadataParser getDatabaseMetadataParser() {
-		// TODO カスタマイズ
-		return new DefaultDatabaseMetadataParser(this);
+		return new PostgreSqlDatabaseMetadataParser(this);
 	}
 	
 	public String getName() {
