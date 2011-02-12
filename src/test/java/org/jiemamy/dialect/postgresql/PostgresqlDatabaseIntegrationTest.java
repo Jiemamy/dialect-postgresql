@@ -152,7 +152,7 @@ public class PostgresqlDatabaseIntegrationTest extends PostgresqlDatabaseTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * VIEWをインポートしてみる。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

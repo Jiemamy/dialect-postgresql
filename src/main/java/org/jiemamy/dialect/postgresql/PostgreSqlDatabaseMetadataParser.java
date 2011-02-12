@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import org.apache.commons.lang.Validate;
 
 import org.jiemamy.JiemamyContext;
+import org.jiemamy.dialect.DatabaseMetadataParser;
 import org.jiemamy.dialect.DefaultDatabaseMetadataParser;
 import org.jiemamy.dialect.DefaultForeignKeyImportVisitor;
 import org.jiemamy.dialect.Dialect;
@@ -31,14 +32,12 @@ import org.jiemamy.dialect.ForeignKeyImportVisitor;
 import org.jiemamy.dialect.ParseMetadataConfig;
 
 /**
- * TODO for daisuke
+ * PostgreSQL用{@link DatabaseMetadataParser}実装クラス。
  * 
  * @version $Id$
  * @author daisuke
  */
 public class PostgreSqlDatabaseMetadataParser extends DefaultDatabaseMetadataParser {
-	
-	private ParseMetadataConfig config;
 	
 	private final PostgreSqlDbObjectImportVisitor dbObjectImportVisitor;
 	
