@@ -18,9 +18,7 @@
  */
 package org.jiemamy.dialect.postgresql;
 
-import java.lang.reflect.Field;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,7 +29,6 @@ import org.jiemamy.dialect.DbObjectImportVisitor;
 import org.jiemamy.dialect.DefaultDbObjectImportVisitor;
 import org.jiemamy.dialect.Dialect;
 import org.jiemamy.model.view.SimpleJmView;
-import org.jiemamy.utils.sql.metadata.TypeSafeDatabaseMetaData;
 
 /**
  * PostgreSQL用{@link DbObjectImportVisitor}実装クラス。
@@ -61,7 +58,7 @@ public class PostgreSqlDbObjectImportVisitor extends DefaultDbObjectImportVisito
 		view.setName(viewName);
 		
 		try {
-			Connection connection = getConnection();
+			Connection connection = getMeta().getMetaData().getConnection();
 			String definition = getViewDefinition(connection, viewName);
 			view.setDefinition(definition);
 		} catch (SQLException e) {
@@ -93,14 +90,5 @@ public class PostgreSqlDbObjectImportVisitor extends DefaultDbObjectImportVisito
 	
 	void setSchema(String schema) {
 		this.schema = schema;
-	}
-	
-	// TODO すまぬ、無茶しているｗ  TypeSafeDatabaseMetaData#getConnection():Connection があればよかった…。
-	private Connection getConnection() throws NoSuchFieldException, IllegalAccessException, SQLException {
-		Field field = TypeSafeDatabaseMetaData.class.getDeclaredField("meta");
-		field.setAccessible(true);
-		DatabaseMetaData meta = (DatabaseMetaData) field.get(getMeta());
-		Connection connection = meta.getConnection();
-		return connection;
 	}
 }
