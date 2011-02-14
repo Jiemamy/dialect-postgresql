@@ -25,13 +25,13 @@ import org.jiemamy.validator.impl.AbstractIdentifierValidator;
  * 
  * @author daisuke
  */
-public class PostgreSqIdentifierValidator extends AbstractIdentifierValidator {
+public class PostgreSqlIdentifierValidator extends AbstractIdentifierValidator {
 	
 	/**
 	 * インスタンスを生成する。
 	 */
-	public PostgreSqIdentifierValidator() {
-		super("^[0-9a-zA-Z_]+$", new PostgreSqReservedWordsChecker());
+	public PostgreSqlIdentifierValidator() {
+		super("^[0-9a-zA-Z_]+$", new PostgreSqlReservedWordsChecker());
 	}
 	
 }

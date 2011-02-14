@@ -47,7 +47,7 @@ public class PostgreSqlDatabaseMetadataParser extends DefaultDatabaseMetadataPar
 	 * 
 	 * @param dialect {@link Dialect}
 	 */
-	public PostgreSqlDatabaseMetadataParser(PostgreSqDialect dialect) {
+	public PostgreSqlDatabaseMetadataParser(PostgreSqlDialect dialect) {
 		this(new PostgreSqlDbObjectImportVisitor(dialect), new DefaultForeignKeyImportVisitor(dialect));
 	}
 	

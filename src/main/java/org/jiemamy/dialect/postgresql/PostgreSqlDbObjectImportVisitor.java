@@ -46,7 +46,7 @@ public class PostgreSqlDbObjectImportVisitor extends DefaultDbObjectImportVisito
 	 * 
 	 * @param dialect {@link Dialect}
 	 */
-	public PostgreSqlDbObjectImportVisitor(PostgreSqDialect dialect) {
+	public PostgreSqlDbObjectImportVisitor(PostgreSqlDialect dialect) {
 		super(dialect);
 	}
 	

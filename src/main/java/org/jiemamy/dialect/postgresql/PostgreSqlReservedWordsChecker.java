@@ -28,7 +28,7 @@ import org.jiemamy.dialect.ReservedWordsChecker;
  * 
  * @author daisuke
  */
-public class PostgreSqReservedWordsChecker implements ReservedWordsChecker {
+public class PostgreSqlReservedWordsChecker implements ReservedWordsChecker {
 	
 	private static final List<String> RESERVED_WORDS = Arrays.asList("ALL", "ANALYSE", "ANALYZE", "AND", "ANY",
 			"ARRAY", "AS", "ASC", "ASYMMETRIC", "BOTH", "CASE", "CAST", "CHECK", "COLLATE", "COLUMN", "CONSTRAINT",

@@ -71,7 +71,7 @@ public class PostgreSqlEmitterTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		emitter = new PostgreSqlEmitter(new PostgreSqDialect());
+		emitter = new PostgreSqlEmitter(new PostgreSqlDialect());
 		
 		config = new SimpleSqlExportConfig();
 		config.setDataSetIndex(-1);
