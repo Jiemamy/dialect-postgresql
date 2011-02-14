@@ -25,7 +25,7 @@ import java.net.URL;
 import org.junit.internal.AssumptionViolatedException;
 
 import org.jiemamy.composer.importer.SimpleDbImportConfig;
-import org.jiemamy.dialect.postgresql.PostgresqlDialect;
+import org.jiemamy.dialect.postgresql.PostgreSqDialect;
 
 /**
  * 実データベースのPostgreSQLに接続して行うインテグレーションテスト用の抽象実装クラス。
@@ -51,7 +51,7 @@ public abstract class PostgresqlDatabaseTest extends AbstractDatabaseTest {
 	 */
 	protected SimpleDbImportConfig newImportConfig() {
 		SimpleDbImportConfig config = new SimpleDbImportConfig();
-		config.setDialect(new PostgresqlDialect());
+		config.setDialect(new PostgreSqDialect());
 		try {
 			config.setDriverJarPaths(new URL[] {
 				new File(getJarPath()).toURL()

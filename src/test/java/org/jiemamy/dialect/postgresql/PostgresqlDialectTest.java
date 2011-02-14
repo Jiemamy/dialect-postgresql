@@ -29,7 +29,7 @@ import org.jiemamy.dialect.AbstractDialectTest;
 import org.jiemamy.dialect.Dialect;
 
 /**
- * {@link PostgresqlDialect}のテストクラス。
+ * {@link PostgreSqDialect}のテストクラス。
  * 
  * @author daisuke
  */
@@ -55,7 +55,7 @@ public class PostgresqlDialectTest extends AbstractDialectTest {
 	public void setUp() throws Exception {
 		context = new JiemamyContext();
 		SimpleJmMetadata meta = new SimpleJmMetadata();
-		meta.setDialectClassName(PostgresqlDialect.class.getName());
+		meta.setDialectClassName(PostgreSqDialect.class.getName());
 		context.setMetadata(meta);
 		dialect = context.findDialect();
 	}

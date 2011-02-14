@@ -62,7 +62,7 @@ import org.jiemamy.utils.DbCleaner;
 import org.jiemamy.utils.sql.SqlExecutor;
 
 /**
- * {@link PostgresqlDialect}と実DBの結合テスト。
+ * {@link PostgreSqDialect}と実DBの結合テスト。
  * 
  * @version $Id$
  * @author daisuke
@@ -122,7 +122,7 @@ public class PostgresqlDatabaseIntegrationTest extends PostgresqlDatabaseTest {
 		config.setOverwrite(true);
 		
 		SqlExporter sqlExporter = new SqlExporter();
-		sqlExporter.exportModel(TestModelBuilders.EMP_DEPT.getBuiltModel(PostgresqlDialect.class.getName()), config);
+		sqlExporter.exportModel(TestModelBuilders.EMP_DEPT.getBuiltModel(PostgreSqDialect.class.getName()), config);
 		
 		// execute
 		Connection connection = null;
@@ -168,7 +168,7 @@ public class PostgresqlDatabaseIntegrationTest extends PostgresqlDatabaseTest {
 		
 		JiemamyContext context = new JiemamyContext(SqlFacet.PROVIDER);
 		SimpleJmMetadata meta = new SimpleJmMetadata();
-		meta.setDialectClassName(PostgresqlDialect.class.getName());
+		meta.setDialectClassName(PostgreSqDialect.class.getName());
 		context.setMetadata(meta);
 		
 		{

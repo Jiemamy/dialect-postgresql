@@ -38,7 +38,7 @@ import org.jiemamy.JiemamyContextTest;
 import org.jiemamy.SimpleJmMetadata;
 import org.jiemamy.SqlFacet;
 import org.jiemamy.composer.Exporter;
-import org.jiemamy.dialect.postgresql.PostgresqlDialect;
+import org.jiemamy.dialect.postgresql.PostgreSqDialect;
 
 /**
  * {@link SqlExporter}のテストクラス。
@@ -90,7 +90,7 @@ public class SqlExporterPostgresqlTest {
 		assertThat(OUTPUT_FILE.exists(), is(false));
 		
 		SimpleJmMetadata meta = new SimpleJmMetadata();
-		meta.setDialectClassName(PostgresqlDialect.class.getName());
+		meta.setDialectClassName(PostgreSqDialect.class.getName());
 		context.setMetadata(meta);
 		
 		BufferedReader reader = null;
@@ -128,7 +128,7 @@ public class SqlExporterPostgresqlTest {
 		assertThat(NOT_EXISTS_DIR.exists(), is(false));
 		
 		SimpleJmMetadata meta = new SimpleJmMetadata();
-		meta.setDialectClassName(PostgresqlDialect.class.getName());
+		meta.setDialectClassName(PostgreSqDialect.class.getName());
 		context.setMetadata(meta);
 		
 		BufferedReader reader = null;

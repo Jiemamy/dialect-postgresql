@@ -58,7 +58,7 @@ import org.jiemamy.validator.Validator;
  * @author daisuke
  */
 @SuppressWarnings("serial")
-public class PostgresqlDialect extends AbstractDialect {
+public class PostgreSqDialect extends AbstractDialect {
 	
 	private static List<Entry> typeEntries = Lists.newArrayList();
 	
@@ -137,7 +137,7 @@ public class PostgresqlDialect extends AbstractDialect {
 	/**
 	 * インスタンスを生成する。
 	 */
-	public PostgresqlDialect() {
+	public PostgreSqDialect() {
 		super("jdbc:postgresql://localhost:5432/", typeEntries);
 	}
 	
@@ -156,7 +156,7 @@ public class PostgresqlDialect extends AbstractDialect {
 	@Override
 	public Validator getValidator() {
 		CompositeValidator validator = (CompositeValidator) super.getValidator();
-		validator.getValidators().add(new PostgresqlIdentifierValidator());
+		validator.getValidators().add(new PostgreSqIdentifierValidator());
 		return validator;
 	}
 }
