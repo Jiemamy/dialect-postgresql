@@ -33,7 +33,7 @@ import org.jiemamy.dialect.postgresql.PostgreSqlDialect;
  * @version $Id$
  * @author daisuke
  */
-public abstract class PostgresqlDatabaseTest extends AbstractDatabaseTest {
+public abstract class XPostgreSqlDatabaseTest extends AbstractDatabaseTest {
 	
 	@Override
 	protected String getPropertiesFilePath(String hostName) {

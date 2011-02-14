@@ -31,7 +31,7 @@ import org.jiemamy.composer.importer.SimpleDbImportConfig;
  * 
  * @author daisuke
  */
-public class DbCleanerPostgresqlTest {
+public class XDbCleanerPostgreSqlTest {
 	
 	/**
 	 * データベースをcleanしてみる。

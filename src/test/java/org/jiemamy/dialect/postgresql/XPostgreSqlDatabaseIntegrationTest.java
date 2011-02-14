@@ -56,7 +56,7 @@ import org.jiemamy.model.table.JmTableBuilder;
 import org.jiemamy.model.table.SimpleJmTable;
 import org.jiemamy.model.view.JmView;
 import org.jiemamy.model.view.SimpleJmView;
-import org.jiemamy.test.PostgresqlDatabaseTest;
+import org.jiemamy.test.XPostgreSqlDatabaseTest;
 import org.jiemamy.test.TestModelBuilders;
 import org.jiemamy.utils.DbCleaner;
 import org.jiemamy.utils.sql.SqlExecutor;
@@ -67,9 +67,9 @@ import org.jiemamy.utils.sql.SqlExecutor;
  * @version $Id$
  * @author daisuke
  */
-public class PostgresqlDatabaseIntegrationTest extends PostgresqlDatabaseTest {
+public class XPostgreSqlDatabaseIntegrationTest extends XPostgreSqlDatabaseTest {
 	
-	private static Logger logger = LoggerFactory.getLogger(PostgresqlDatabaseIntegrationTest.class);
+	private static Logger logger = LoggerFactory.getLogger(XPostgreSqlDatabaseIntegrationTest.class);
 	
 	private static final RawTypeDescriptor INTEGER = new SimpleRawTypeDescriptor(RawTypeCategory.INTEGER, "INTEGER",
 			"int4");

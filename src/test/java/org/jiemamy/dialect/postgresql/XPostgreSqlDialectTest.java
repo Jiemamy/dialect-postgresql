@@ -33,7 +33,7 @@ import org.jiemamy.dialect.Dialect;
  * 
  * @author daisuke
  */
-public class PostgresqlDialectTest extends AbstractDialectTest {
+public class XPostgreSqlDialectTest extends AbstractDialectTest {
 	
 	/** {@link XADataSource} */
 	public XADataSource xaDataSource;

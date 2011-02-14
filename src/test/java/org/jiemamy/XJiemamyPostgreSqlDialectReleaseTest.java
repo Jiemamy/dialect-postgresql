@@ -41,9 +41,9 @@ import org.slf4j.LoggerFactory;
  * @author daisuke
  */
 @Ignore
-public class JiemamyPostgresqlDialectReleaseTest {
+public class XJiemamyPostgreSqlDialectReleaseTest {
 	
-	private static Logger logger = LoggerFactory.getLogger(JiemamyPostgresqlDialectReleaseTest.class);
+	private static Logger logger = LoggerFactory.getLogger(XJiemamyPostgreSqlDialectReleaseTest.class);
 	
 	static final String HEADER = "/* * Copyright 2007-" + Calendar.getInstance().get(Calendar.YEAR)
 			+ " Jiemamy Project and the Others.";

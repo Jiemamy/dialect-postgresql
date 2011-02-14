@@ -45,16 +45,16 @@ import org.jiemamy.dialect.postgresql.PostgreSqlDialect;
  * 
  * @author daisuke
  */
-public class SqlExporterPostgresqlTest {
+public class XSqlExporterPostgreSqlTest {
 	
-	private static Logger logger = LoggerFactory.getLogger(SqlExporterPostgresqlTest.class);
+	private static Logger logger = LoggerFactory.getLogger(XSqlExporterPostgreSqlTest.class);
 	
 	/** ${WORKSPACE}/org.jiemamy.composer/target/sqlExporterTest1.sql */
-	private static final File OUTPUT_FILE = new File("./target/testresult/SqlExporterPostgresqlTest-1.sql");
+	private static final File OUTPUT_FILE = new File("./target/testresult/XSqlExporterPostgreSqlTest-1.sql");
 	
 	/** ${WORKSPACE}/org.jiemamy.composer/target/notExists/sqlExporterTest2.sql */
 	private static final File OUTPUT_FILE_IN_NOT_EXISTS_DIR = new File(
-			"./target/testresult/notExists/SqlExporterPostgresqlTest-2.sql");
+			"./target/testresult/notExists/XSqlExporterPostgreSqlTest-2.sql");
 	
 	private static final File NOT_EXISTS_DIR = new File("./target/testresult/notExists");
 	
