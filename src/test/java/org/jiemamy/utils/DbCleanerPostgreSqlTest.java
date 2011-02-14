@@ -27,11 +27,11 @@ import org.junit.Test;
 import org.jiemamy.composer.importer.SimpleDbImportConfig;
 
 /**
- * {@link DbCleaner}のテストクラス。
+ * {@link DbCleaner}のPostgreSQL用テストクラス。
  * 
  * @author daisuke
  */
-public class XDbCleanerPostgreSqlTest {
+public class DbCleanerPostgreSqlTest {
 	
 	/**
 	 * データベースをcleanしてみる。
