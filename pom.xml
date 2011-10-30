@@ -4,9 +4,8 @@
   <parent>
     <groupId>org.jiemamy</groupId>
     <artifactId>jiemamy-master</artifactId>
-    <version>1.7.1</version>
+    <version>1.7.2</version>
   </parent>
-  <groupId>org.jiemamy</groupId>
   <artifactId>jiemamy-dialect-postgresql</artifactId>
   <name>Jiemamy Dialect for PostgreSQL</name>
   <version>0.3.1-SNAPSHOT</version>
@@ -52,7 +51,7 @@
             <phase>package</phase>
             <configuration>
               <target>
-                <copy file="target/${artifactId}-${version}.jar" tofile="${basedir}/../org.jiemamy.eclipse.dialect.postgresql/lib/${artifactId}.jar" />
+                <copy file="target/${project.artifactId}-${project.version}.jar" tofile="${basedir}/../org.jiemamy.eclipse.dialect.postgresql/lib/${project.artifactId}.jar" />
               </target>
             </configuration>
             <goals>
@@ -128,6 +127,6 @@
     -->
   </repositories>
   <properties>
-    <jiemamy.version>0.3.0</jiemamy.version>
+    <jiemamy.version>[0.3.0,0.4.0)</jiemamy.version>
   </properties>
 </project>
