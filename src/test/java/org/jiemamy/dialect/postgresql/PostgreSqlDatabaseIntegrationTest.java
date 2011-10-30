@@ -79,7 +79,7 @@ public class PostgreSqlDatabaseIntegrationTest extends PostgreSqlDatabaseTest {
 	private static final String VIEW_DEFINITION =
 			"SELECT t_foo.id, t_foo.name, t_foo.hoge FROM t_foo WHERE (t_foo.id > 10);";
 	
-
+	
 	/**
 	 * 実DBからインポートしてみる。
 	 * 
@@ -190,7 +190,7 @@ public class PostgreSqlDatabaseIntegrationTest extends PostgreSqlDatabaseTest {
 		
 		File outFile = new File("target/testresult/PostgreSqlDatabaseTest_test04.sql");
 		SimpleSqlExportConfig config = new SimpleSqlExportConfig();
-		config.setDataSetIndex(0);
+		config.setDataSetIndex(-1);
 		config.setEmitDropStatements(false);
 		config.setOutputFile(outFile);
 		config.setOverwrite(true);
