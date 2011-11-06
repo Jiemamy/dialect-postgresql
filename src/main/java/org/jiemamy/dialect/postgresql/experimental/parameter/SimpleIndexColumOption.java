@@ -27,7 +27,7 @@ public final class SimpleIndexColumOption implements IndexColumnOption {
 	
 	private NullOrder nullOrder;
 	
-
+	
 	public NullOrder getNullOrder() {
 		return nullOrder;
 	}

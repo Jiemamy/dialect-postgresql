@@ -27,7 +27,7 @@ public enum NullOrder {
 	
 	/** NULLを非NULLより前にソートすることを指定 */
 	NULL_FIRST,
-
+	
 	/** NULLを非NULLより後にソートすることを指定 */
 	NULL_LAST
 }

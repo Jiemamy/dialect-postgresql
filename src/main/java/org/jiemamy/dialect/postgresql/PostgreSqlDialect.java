@@ -133,7 +133,7 @@ public class PostgreSqlDialect extends AbstractDialect {
 		// FORMAT-ON
 	}
 	
-
+	
 	/**
 	 * インスタンスを生成する。
 	 */

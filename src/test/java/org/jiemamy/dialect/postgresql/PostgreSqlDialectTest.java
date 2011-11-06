@@ -45,7 +45,7 @@ public class PostgreSqlDialectTest extends AbstractDialectTest {
 	
 	private JiemamyContext context;
 	
-
+	
 	/**
 	 * テストを初期化する。
 	 * 

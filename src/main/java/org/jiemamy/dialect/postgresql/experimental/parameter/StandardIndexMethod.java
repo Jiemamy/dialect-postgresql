@@ -28,13 +28,13 @@ public enum StandardIndexMethod implements IndexMethodType {
 	
 	/** B-treeインデックスメソッド */
 	btree,
-
+	
 	/** hashインデックスメソッド */
 	hash,
-
+	
 	/** GiSTインデックスメソッド */
 	gist,
-
+	
 	/** GINインデックスメソッド */
 	gin
 	

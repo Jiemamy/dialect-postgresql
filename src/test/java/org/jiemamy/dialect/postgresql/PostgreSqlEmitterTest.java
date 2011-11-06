@@ -63,7 +63,7 @@ public class PostgreSqlEmitterTest {
 	
 	private JiemamyContext context;
 	
-
+	
 	/**
 	 * テストを初期化する。
 	 * 

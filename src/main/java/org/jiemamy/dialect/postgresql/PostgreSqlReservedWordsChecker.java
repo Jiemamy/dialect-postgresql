@@ -41,7 +41,7 @@ public class PostgreSqlReservedWordsChecker implements ReservedWordsChecker {
 			"BETWEEN", "BINARY", "CROSS", "FREEZE", "FULL", "ILIKE", "INNER", "IS", "ISNULL", "JOIN", "LEFT", "LIKE",
 			"NATURAL", "NOTNULL", "OUTER", "OVERLAPS", "RIGHT", "SIMILAR", "VERBOSE");
 	
-
+	
 	public boolean isReserved(String name) {
 		return RESERVED_WORDS.contains(name);
 	}

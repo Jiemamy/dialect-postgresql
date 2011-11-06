@@ -28,7 +28,7 @@ public abstract class AbstractPostgresObjectOption implements PostgresObjectOpti
 	/** テーブルスペース */
 	private String tablespace;
 	
-
+	
 	public String getTablespace() {
 		return tablespace;
 	}

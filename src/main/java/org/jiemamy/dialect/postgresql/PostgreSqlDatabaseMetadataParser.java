@@ -41,7 +41,7 @@ public class PostgreSqlDatabaseMetadataParser extends DefaultDatabaseMetadataPar
 	
 	private final PostgreSqlDbObjectImportVisitor dbObjectImportVisitor;
 	
-
+	
 	/**
 	 * インスタンスを生成する。
 	 * 

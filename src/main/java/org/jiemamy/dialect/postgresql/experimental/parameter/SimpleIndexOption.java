@@ -58,7 +58,7 @@ public final class SimpleIndexOption extends AbstractPostgresObjectOption implem
 	/** 部分インデックス生成用条件 */
 	private String predicate;
 	
-
+	
 	public Boolean getConcurrently() {
 		return concurrently;
 	}

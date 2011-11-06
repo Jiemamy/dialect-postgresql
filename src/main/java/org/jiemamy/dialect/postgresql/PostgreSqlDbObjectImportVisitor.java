@@ -44,7 +44,7 @@ public class PostgreSqlDbObjectImportVisitor extends DefaultDbObjectImportVisito
 	
 	private String schema;
 	
-
+	
 	/**
 	 * インスタンスを生成する。
 	 * 

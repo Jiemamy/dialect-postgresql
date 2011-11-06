@@ -58,7 +58,7 @@ public class SqlExporterPostgreSqlTest {
 	
 	private static final File NOT_EXISTS_DIR = new File("./target/testresult/notExists");
 	
-
+	
 	/**
 	 * テストを初期化する。
 	 * 
@@ -72,11 +72,11 @@ public class SqlExporterPostgreSqlTest {
 		}
 	}
 	
-
+	
 	/** テスト対象のエクスポータ */
 	private Exporter<SqlExportConfig> exporter = new SqlExporter();
 	
-
+	
 	/**
 	 * モデルからSQLファイルがエクスポートできることを確認する。
 	 * 
