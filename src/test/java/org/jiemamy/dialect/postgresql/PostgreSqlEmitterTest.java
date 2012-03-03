@@ -39,7 +39,7 @@ import org.jiemamy.model.datatype.SimpleRawTypeDescriptor;
 import org.jiemamy.model.datatype.TypeParameterKey;
 import org.jiemamy.model.sql.SqlStatement;
 import org.jiemamy.model.table.JmTableBuilder;
-import org.jiemamy.model.table.SimpleJmTable;
+import org.jiemamy.model.table.JmTable;
 
 /**
  * {@link PostgreSqlEmitter}のテストクラス。
@@ -103,7 +103,7 @@ public class PostgreSqlEmitterTest {
 		varchar32.putParam(TypeParameterKey.SIZE, 32);
 		
 		// FORMAT-OFF
-		SimpleJmTable table = new JmTableBuilder("T_FOO")
+		JmTable table = new JmTableBuilder("T_FOO")
 				.with(new JmColumnBuilder("ID").type(new SimpleDataType(INTEGER)).build())
 				.with(new JmColumnBuilder("NAME").type(varchar32).build())
 				.with(new JmColumnBuilder("HOGE").type(new SimpleDataType(INTEGER)).build())

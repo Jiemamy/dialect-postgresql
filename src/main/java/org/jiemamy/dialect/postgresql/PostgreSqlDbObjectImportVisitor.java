@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 import org.jiemamy.dialect.DbObjectImportVisitor;
 import org.jiemamy.dialect.DefaultDbObjectImportVisitor;
 import org.jiemamy.dialect.Dialect;
-import org.jiemamy.model.view.SimpleJmView;
+import org.jiemamy.model.view.JmView;
 
 /**
  * PostgreSQL用{@link DbObjectImportVisitor}実装クラス。
@@ -55,10 +55,10 @@ public class PostgreSqlDbObjectImportVisitor extends DefaultDbObjectImportVisito
 	}
 	
 	@Override
-	protected SimpleJmView createView(String viewName) throws SQLException {
+	protected JmView createView(String viewName) throws SQLException {
 		Validate.notNull(viewName);
 		
-		SimpleJmView view = new SimpleJmView();
+		JmView view = new JmView();
 		view.setName(viewName);
 		
 		try {

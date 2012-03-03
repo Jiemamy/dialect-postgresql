@@ -44,7 +44,7 @@ import org.jiemamy.composer.exporter.SqlExporter;
 import org.jiemamy.composer.importer.DbImporter;
 import org.jiemamy.model.DbObject;
 import org.jiemamy.model.column.JmColumnBuilder;
-import org.jiemamy.model.constraint.SimpleJmPrimaryKeyConstraint;
+import org.jiemamy.model.constraint.JmPrimaryKeyConstraint;
 import org.jiemamy.model.dataset.JmDataSet;
 import org.jiemamy.model.datatype.RawTypeCategory;
 import org.jiemamy.model.datatype.RawTypeDescriptor;
@@ -53,9 +53,9 @@ import org.jiemamy.model.datatype.SimpleRawTypeDescriptor;
 import org.jiemamy.model.datatype.TypeParameterKey;
 import org.jiemamy.model.table.JmTable;
 import org.jiemamy.model.table.JmTableBuilder;
-import org.jiemamy.model.table.SimpleJmTable;
+import org.jiemamy.model.table.JmTable;
 import org.jiemamy.model.view.JmView;
-import org.jiemamy.model.view.SimpleJmView;
+import org.jiemamy.model.view.JmView;
 import org.jiemamy.test.PostgreSqlDatabaseTest;
 import org.jiemamy.test.TestModelBuilders;
 import org.jiemamy.utils.DbCleaner;
@@ -173,16 +173,16 @@ public class PostgreSqlDatabaseIntegrationTest extends PostgreSqlDatabaseTest {
 		
 		{
 			// FORMAT-OFF
-			SimpleJmTable table = new JmTableBuilder("T_FOO")
+			JmTable table = new JmTableBuilder("T_FOO")
 					.with(new JmColumnBuilder("ID").type(aiInteger).build())
 					.with(new JmColumnBuilder("NAME").type(varchar32).build())
 					.with(new JmColumnBuilder("HOGE").type(new SimpleDataType(INTEGER)).build())
 					.build();
 			// FORMAT-ON
-			table.store(SimpleJmPrimaryKeyConstraint.of(table.getColumn("ID")));
+			table.store(JmPrimaryKeyConstraint.of(table.getColumn("ID")));
 			context.store(table);
 			
-			SimpleJmView view = new SimpleJmView();
+			JmView view = new JmView();
 			view.setName("V_BAR");
 			view.setDefinition(VIEW_DEFINITION);
 			context.store(view);
