@@ -109,7 +109,7 @@ public class PostgreSqlEmitterTest {
 				.with(new JmColumnBuilder("HOGE").type(new SimpleDataType(INTEGER)).build())
 				.build();
 		// FORMAT-ON
-		context.store(table);
+		context.add(table);
 		
 		List<SqlStatement> statements = emitter.emit(context, config);
 		assertThat(statements.size(), is(2));

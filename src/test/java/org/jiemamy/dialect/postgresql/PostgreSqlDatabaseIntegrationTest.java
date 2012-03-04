@@ -179,13 +179,13 @@ public class PostgreSqlDatabaseIntegrationTest extends PostgreSqlDatabaseTest {
 					.with(new JmColumnBuilder("HOGE").type(new SimpleDataType(INTEGER)).build())
 					.build();
 			// FORMAT-ON
-			table.store(JmPrimaryKeyConstraint.of(table.getColumn("ID")));
-			context.store(table);
+			table.add(JmPrimaryKeyConstraint.of(table.getColumn("ID")));
+			context.add(table);
 			
 			JmView view = new JmView();
 			view.setName("V_BAR");
 			view.setDefinition(VIEW_DEFINITION);
-			context.store(view);
+			context.add(view);
 		}
 		
 		File outFile = new File("target/testresult/PostgreSqlDatabaseTest_test04.sql");
